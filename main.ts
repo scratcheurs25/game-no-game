@@ -42,6 +42,17 @@ MoveY(-1)
             PlayerPos = [2,3]
             lvlend = [4,1]
         }else if(lvl == 3){
+            lvl = 4
+            basic.showLeds(`
+            . . . . .
+            . . . . #
+            . . . . .
+            . # . . .
+            # # # . .
+            `)
+            PlayerPos = [0,3]
+            lvlend = [4,0]
+        }else{
             basic.showString("end")
         }
     }
