@@ -3,6 +3,7 @@ let lvlend = [4,3]
 let jump = 0
 let d = 1
 let lvl = 1
+let numberofplank = 0
 basic.showLeds(`
 . . . . .
 . . . . .
@@ -11,6 +12,7 @@ basic.showLeds(`
 # # # # #
 `)
 basic.forever(function(){
+    console.log(numberofplank)
     led.plot(PlayerPos[0],PlayerPos[1])
     if(led.point(PlayerPos[0],PlayerPos[1] + 1) == false && jump == 0 && PlayerPos[1] != 4){
 MoveY(-1)
@@ -61,10 +63,16 @@ MoveX(-1)
     
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function() {
-    if(d == 1){
-        led.plot(PlayerPos[0] + 1,PlayerPos[1])
-    }else{
-        led.plot(PlayerPos[0] - 1,PlayerPos[1])
+    if(d == 1 && numberofplank > 0){
+        if(led.point(PlayerPos[0]+1,PlayerPos[1]) == false){
+            numberofplank -= 1
+        }
+        led.plot(PlayerPos[0]+1,PlayerPos[1])
+    }else if(numberofplank > 0){
+        if(led.point(PlayerPos[0]-1,PlayerPos[1])){
+            numberofplank - 1
+        }
+        led.plot(PlayerPos[0]-1,PlayerPos[1])
     }
 })
 
@@ -78,9 +86,16 @@ jump = 0
     })
 input.onGesture(Gesture.Shake, function() {
     if(d == 0){
+        if(led.point(PlayerPos[0]-1,PlayerPos[1]) == true){
+            numberofplank += 1
+        }
         led.unplot(PlayerPos[0]-1,PlayerPos[1])
     }else{
-        led.unplot(PlayerPos[0]+1,PlayerPos[1])
+        
+  if(led.point(PlayerPos[0]+1,PlayerPos[1]) == true){
+      numberofplank +=1
+  }
+  led.unplot(PlayerPos[0]+1,PlayerPos[1])
     }
 
 })
